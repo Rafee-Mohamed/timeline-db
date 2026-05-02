@@ -1,0 +1,50 @@
+package io.disys.timelinedb.mvcc.codec;
+
+import io.disys.timelinedb.mvcc.model.*;
+import io.disys.timelinedb.mvcc.model.Record;
+
+import java.nio.ByteBuffer;
+
+import static io.disys.timelinedb.mvcc.codec.CodecConstants.*;
+
+/** Decodes binary representations into {@link Revision} and {@link Record} instances. */
+public class RecordDecoder {
+
+    /**
+     * @param revision  the encoded revision bytes
+     * @param record    the encoded record bytes
+     * @return the decoded {@link RevisionRecord}
+     */
+    public RevisionRecord decode(byte[] revision, byte[] record) {
+        return new RevisionRecord(decodeRevision(revision), decodeRecord(record));
+    }
+
+    /**
+     * @param record  the encoded record bytes
+     * @return the decoded {@link Record}
+     */
+    public Record decodeRecord(byte[] record) {
+        var buffer = ByteBuffer.wrap(record);
+
+        var tombstone = buffer.get();
+
+        var key = new byte[buffer.getInt()];
+        buffer.get(key);
+        var val = new byte[record.length - RECORD_OVERHEAD - key.length];
+        var isTombstone = tombstone == TOMBSTONE;
+        if (!isTombstone) {
+            buffer.get(val);
+        }
+
+        return new Record(key, val, isTombstone, buffer.getInt(), buffer.getLong(), buffer.getLong());
+    }
+
+    /**
+     * @param revision  the encoded revision bytes
+     * @return the decoded {@link Revision}
+     */
+    public Revision decodeRevision(byte[] revision) {
+        var buffer = ByteBuffer.wrap(revision);
+        return new Revision(buffer.getLong(), buffer.getInt());
+    }
+}

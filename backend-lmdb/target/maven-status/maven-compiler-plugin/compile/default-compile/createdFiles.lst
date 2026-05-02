@@ -1,0 +1,8 @@
+io/disys/timelinedb/backend/lmdb/LmdbClosableIterator.class
+io/disys/timelinedb/backend/lmdb/LmdbWriteTxn.class
+io/disys/timelinedb/backend/lmdb/LmdbUtil.class
+io/disys/timelinedb/backend/lmdb/LmdbConfig$Builder.class
+io/disys/timelinedb/backend/lmdb/LmdbReadTxn.class
+io/disys/timelinedb/backend/lmdb/LmdbConfig.class
+io/disys/timelinedb/backend/lmdb/LmdbSnapshot.class
+io/disys/timelinedb/backend/lmdb/LmdbBackend.class
