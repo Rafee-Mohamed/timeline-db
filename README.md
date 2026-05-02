@@ -508,7 +508,7 @@ choice made to serve that history without blocking concurrent reads. It was late
 from Axis for independent development and use.
 
 This project is part of a broader effort to explore, learn, and engineer production-grade
-distributed systems from first principles.
+distributed systems and storage engines from first principles.
 
 
 ## Requirements
